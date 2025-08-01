@@ -1,11 +1,12 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import { login } from './Service';
+import { useNavigate } from 'react-router-dom';
+import { LoginContext } from '../App';
 
-const LoginContext = createContext();
-
-const LoginForm = () => {
-  const { setIsLoggedIn } = useContext(LoginContext);
+const LoginPage = () => {
+  const { setIsLoggedIn } = useContext(LoginContext); 
+  const navigate = useNavigate();
 
   const validate = (values) => {
     const errors = {};
@@ -28,7 +29,8 @@ const LoginForm = () => {
       const result = login(values.username, values.password);
       if (result) {
         alert('Login Successful ✅');
-        setIsLoggedIn(true);
+        setIsLoggedIn(true); 
+        navigate('/dashboard'); 
       } else {
         alert('Invalid username & password ❌');
       }
@@ -67,21 +69,6 @@ const LoginForm = () => {
 
       <button type="submit">Login</button>
     </form>
-  );
-};
-
-const LoginPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const contextValue = { isLoggedIn, setIsLoggedIn };
-
-  return (
-    <LoginContext.Provider value={contextValue}>
-      {isLoggedIn ? (
-        <h2>Welcome! You are logged in</h2>
-      ) : (
-        <LoginForm />
-      )}
-    </LoginContext.Provider>
   );
 };
 
