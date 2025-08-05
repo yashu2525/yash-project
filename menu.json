@@ -1,0 +1,5 @@
+[
+  { "label": "Employees", "icon": "👨‍🌾" },
+  { "label": "Leaves", "icon": "📝" },
+  { "label": "Logout", "icon": "🚪" }
+]
