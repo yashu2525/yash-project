@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef, useMemo } from 'react';
 import { useFormik } from 'formik';
 import { login } from '../services/Service.js';
 import { useNavigate } from 'react-router-dom';
@@ -8,16 +8,26 @@ const LoginPage = () => {
   const { setIsLoggedIn } = useContext(LoginContext);
   const navigate = useNavigate();
 
-  const validate = (values) => {
-    const errors = {};
-    if (!values.username) {
-      errors.username = 'Username is required';
+  const usernameRef = useRef(null);
+
+  useEffect(() => {
+    if (usernameRef.current) {
+      usernameRef.current.focus();
     }
-    if (!values.password) {
-      errors.password = 'Password is required';
-    }
-    return errors;
-  };
+  }, []);
+
+  const validate = useMemo(() => {
+    return (values) => {
+      const errors = {};
+      if (!values.username) {
+        errors.username = 'Username is required';
+      }
+      if (!values.password) {
+        errors.password = 'Password is required';
+      }
+      return errors;
+    };
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -44,6 +54,7 @@ const LoginPage = () => {
         <div className="mb-3">
           <label className="form-label">Username</label>
           <input
+            ref={usernameRef} 
             type="text"
             className={`form-control ${formik.touched.username && formik.errors.username ? 'is-invalid' : ''}`}
             name="username"
