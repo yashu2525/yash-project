@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoginContext } from '../App';
 
 const LoginPage = () => {
-  const { setIsLoggedIn } = useContext(LoginContext);
+  const { setIsLoggedIn } = useContext(LoginContext);  
   const navigate = useNavigate();
 
   const usernameRef = useRef(null);
